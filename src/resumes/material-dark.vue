@@ -7,109 +7,53 @@
     <div class="section-headline">
       {{ lang.contact }}
     </div>
-    <div class="item">
-      <div class="icon">
-        <i class="material-icons">account_circle</i>
-      </div>
-      <div class="text">
-        <ul>
-          <li> {{ lang.born }} {{person.birth.year}} {{ lang.bornIn }} {{person.birth.location}}</li>
-        </ul>
-      </div>
+    <div class="item" v-for="contact in person.contact" :key="contact.type">
+        <div class="text">
+            <span class="empty-space">&nbsp;</span><span>{{ contact.type }}</span>
+        </div>
     </div>
-
-    <div class="item">
-      <div class="icon">
-        <i class="material-icons">location_city</i>
-      </div>
-      <div class="text">
-        <ul>
-          <li>{{person.contact.street}}</li>
-          <li>{{person.contact.city}}</li>
-        </ul>
-      </div>
-    </div>
-
-    <a :href="'tel:'+person.contact.phone">
-      <div class="item">
-        <div class="icon">
-          <i class="material-icons">phone</i>
-        </div>
-        <div class="text">
-          {{person.contact.phone}}
-        </div>
-      </div>
-    </a>
-
-    <a :href="'mailto:'+person.contact.email">
-      <div class="item">
-        <div class="icon">
-          <i class="material-icons">email</i>
-        </div>
-        <div class="text">
-          {{person.contact.email}}
-        </div>
-      </div>
-    </a>
-
-    <a v-if="person.contact.github" :href="'https://github.com/'+person.contact.github" target="_blank">
-      <div class="item">
-        <div class="icon">
-          <i class="fa fa-github"></i>
-        </div>
-        <div class="text">
-          <span>@{{person.contact.github}}</span>
-          <span>github.com/{{person.contact.github}}</span>
-        </div>
-      </div>
-    </a>
-
-    <a v-if="person.contact.website" :href="person.contact.website" target="_blank">
-      <div class="item">
-        <div class="icon">
-          <i class="material-icons">language</i>
-        </div>
-        <div class="text">
-          <span>{{person.contact.website}}</span>
-        </div>
-      </div>
-    </a>
-
     <div class="item last">
-      <div class="section-headline">
-        {{ lang.skills }}
-      </div>
-      <div class="skill" v-for="skill in person.skills" :key="skill.name">
-        <div class="right">
-          <span>{{skill.name}}&nbsp;</span>
-          <div class="progress">
-            <div class="determinate" :style="'width: '+skill.level+'%;'">
-              <i class="fa fa-circle"></i>
-            </div>
-          </div>
+      <div class="section-headline">{{ lang.skills }}</div>
+      <div class="skill">
+        <div class="left">
+          <span v-for="skill in person.skills" :key="skill.name">
+            <span>{{skill.name}}</span>
+          </span>
         </div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="section-headline">Recommendations</div>
+      <div class="rec-box">
+        <div class="recommendation"> {{person.recommendation.rec}}</div>  
+        <div class="recommender"> {{person.recommendation.name}}</div>  
+        <div class="position"> {{person.recommendation.title}}</div>  
       </div>
     </div>
   </div>
-
   <div class="rightCol">
     <div class="title">
       <h2>{{person.name.first}} {{person.name.middle}} {{person.name.last}}</h2>
       <div>{{person.position}}</div>
     </div>
-
+    <div class="section-headline">{{ lang.about }}</div>
+      <div class="block">
+        <div class="about" v-for="about in person.about" :key="about.par">
+            <span> {{about.par}}</span>
+        </div>
+      </div>
     <div class="section-headline">{{ lang.experience }}</div>
     <div class="block" v-for="experience in person.experience" :key="experience.company">
-      <div class="block-helper"></div>
-      <h3 class="headline">{{experience.position}} - {{experience.company}}</h3>
-        <div class="subheadline">{{experience.timeperiod}}</div>
-        <p class="info">
-          {{experience.description}}
+      <div class="headline">
+        <span> {{experience.position}} - {{experience.company}}</span>
+        <span class="subheadline">{{experience.timeperiod}}</span>
+      </div>     
+        <p class="info" v-html="experience.description">
+          <!-- {{experience.description}} -->
         </p>
     </div>
     <div class="section-headline">{{ lang.education }}</div>
     <div class="block" v-for="education in person.education" :key="education.degree">
-      <div class="block-helper"></div>
       <div class="headline">{{education.degree}}</div>
       <p class="info">
         {{education.timeperiod}}, {{education.description}}
@@ -132,8 +76,13 @@ export default Vue.component(name, getVueOptions(name));
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 .resume {
-  font-family:'Roboto' !important;
-  background:#cccccc;
+  font-family:'Arial' !important;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  // background-color:#f3f3f3;
+  background-color:white;
+  color: #767676;
+  font-size: 14px;
 }
 a {
   cursor:pointer;
@@ -147,22 +96,21 @@ a {
 }
 .title {
   right:25px;
-  padding-left:20px;
+  // padding-left:20px;
   padding-top:20px;
-  bottom:25px;
+  // bottom:25px;
   h2 {
     text-transform:uppercase;
     display:block;
-    font-size:1.17em;
-    -webkit-margin-before:1em;
-    -webkit-margin-after:1em;
+    // font-size:1.17em;
+    // -webkit-margin-before:1em;
+    // -webkit-margin-after:1em;
     -webkit-margin-start:0;
     -webkit-margin-end:0;
-    color:white;
-    color:rgba(0,0,0,0.7);
+    color:#5164a0;
     padding-top:0;
     margin-top:0;
-    letter-spacing:10px;
+    // letter-spacing:10px;
     font-weight:400;
   }
   div {
@@ -173,15 +121,15 @@ a {
     line-height:15pt;
     font-weight:300;
     font-weight:500;
-    letter-spacing:2px;
-    letter-spacing:3px;
-    color:white;
-    color:#16151c;
-    color:rgba(63,61,60,0.71);
+    // letter-spacing:2px;
+    // letter-spacing:3px;
+    // color:white;
+    // color:#16151c;
+    // color:rgba(63,61,60,0.71);
     display:block;
-    font-size:0.67em;
-    font-size:10pt;
-    -webkit-margin-before:2.33em;
+    // font-size:0.67em;
+    // font-size:10pt;
+    -webkit-margin-before:0;
     -webkit-margin-start:0;
     -webkit-margin-end:0;
     padding-top:0;
@@ -190,15 +138,22 @@ a {
   }
 }
 .section-headline {
+  width:97%;
+  // padding-right:px;
+  margin-right:5px;
+  font-family:'Roboto';
   text-transform:uppercase;
-  font-weight:500;
-  letter-spacing:3px;
-  font-size:10pt;
-  opacity:0.8;
-  margin-left:20px;
-  margin-top:40px;
-  margin-bottom:20px;
-  color:#3f3d3c;
+  font-weight:600;
+  border-bottom:1px solid #ccc;
+
+  // letter-spacing:3px;
+  font-size:13px;
+  margin-bottom:3px;
+  // opacity:0.8;
+  // margin-left:5px;
+  margin-top:20px;
+  // margin-bottom:20px;
+  color:#5164a0;
 }
 .c {
   clear:both;
@@ -215,17 +170,14 @@ ul {
   list-style-type:none;
 }
 p {
-  margin-top:0;
-  margin-bottom:25px;
   font-family:'Roboto', sans-serif;
   font-weight:300;
-  font-size:10pt;
-  line-height:17pt;
 }
 .m_box {
-  box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+  border-right: 1px solid #ccc;
 }
 .fa, .material-icons {
+  font-family: 'Material Icons';
   display:inline-block;
   font-style:normal;
   font-weight:normal;
@@ -243,48 +195,46 @@ h2 {
   font-weight:500;
   margin:0;
   margin:0;
-  font-size:22pt;
-  line-height:37pt;
 }
 h4 {
   font-weight:400;
   margin:0;
-  font-size:12pt;
   line-height:20pt;
   opacity:1;
 }
 .rightCol {
-  width:63.5%;
+  width:68%;
   height:100%;
   float:right;
-  display:flex;
   flex-direction:column;
+  .about {
+    font-weight: 300;
+  }
   .block {
-    width:90%;
+    width:95%;
     position:relative;
-    background-color:#ffffff;
-    padding:20px;
-    margin-top:5px;
-    margin-bottom:5px;
-    display:inline-block;
-    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16), 0 2px 10px 0 rgba(0,0,0,0.12);
+    padding-right:5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    .about{
+      font-family: 'Roboto', sans-serif;
+      font-weight: 300;
+      margin-bottom: 5px;
+    }
     .headline {
       font-weight:300;
-      display:block;
-      font-size:15px;
-      color:rgba(0,0,0,0.870588);
+      display:inline-block;
     }
     .subheadline {
-      color:rgba(0,0,0,0.541176);
-      display:block;
-      font-size:14px;
+      display:inline-block;
+      font-size:12px;
       font-weight:300;
     }
     .info {
-      font-size:14px;
-      color:rgba(0,0,0,0.870588);
       margin-bottom:0;
-      padding-top:20px;
+      margin-top: 5px;
+      line-height: 1.3;
+      // color: red;
     }
     .icon {
       width:16%;
@@ -293,7 +243,6 @@ h4 {
       .fa, .material-icons {
         text-align:center;
         display:block;
-        font-size:30pt;
       }
     }
     .content {
@@ -317,11 +266,10 @@ h4 {
         span {
           color:#d8ab94;
           margin-top:0;
-          font-size:10pt;
           line-height:16pt;
         }
         p {
-          margin-top:5px;
+          margin-top:-10px;
         }
       }
       .item:last-of-type {
@@ -332,21 +280,26 @@ h4 {
   }
 }
 .leftCol {
-  width:35%;
+  width:30%;
   height:100%;
   float:left;
   padding:0;
   text-align:left;
-  color:#ffffff;
-  color:rgba(255,255,255,0.59);
-  background-color:#16151c;
+  background-color:#f5f5f5;
   overflow:hidden;
   display:block;
   .section-headline {
-    color:rgba(255,255,255,0.54);
+    border-bottom:1px solid #ccc;
+    width: 90%;
+    margin-left: 10px;
+    padding-right: 5px;
+  }
+  .span-icon {
+    color:red;
+    background-color: black;
+    padding-bottom: 10px;
   }
   a {
-    color:rgba(255,255,255,0.59);
     text-decoration:none;
   }
   .heading {
@@ -358,30 +311,46 @@ h4 {
     width:100%;
     height:277px;
   }
+  .contact-block {
+    display: block;
+    color: red;
+    background-color: blue;
+    span {
+      color: black;
+      display:inline-block;
+      margin-bottom: 10px;
+      margin-top: 10px;
+      // vertical-align: top;
+    }
+  }
   .item {
     width:100%;
     margin-top:13px;
     float:left;
     .fa, .material-icons {
-      display:inherit;
-      text-align:center;
-    }
-    .icon {
-      width:20%;
-      float:left;
+      display: inherit;
+      text-align: center;
     }
     .text {
-      float:right;
+      font-family:'Roboto', sans-serif;
+      font-weight: 300;
       width:69%;
       padding-right:10%;
-      padding-top:0;
+
+      margin-left: 10px;
       display:block;
-      font-size:15px;
       font-weight:300;
+      .empty-space{
+        background-color: rgb(225, 225, 225);
+        margin-right: 10px;
+      }
+      span{
+        display: inline-block;
+        vertical-align: middle;
+      }
       li {
         padding-top:0;
         display:block;
-        font-size:15px;
         font-weight:300;
       }
     }
@@ -390,45 +359,16 @@ h4 {
     }
     .skill {
       clear:both;
+      // display:flex;
       width:97%;
-      padding-top:4px;
-      .left {
-        float:left;
-        width:10%;
-        padding-top:3px;
-        i:nth-child(2) {
-          float:left;
-          padding-top:4px;
-        }
-      }
-      .right {
-        float:right;
-        width:93%;
-        .progress {
-          float:left;
-          position:relative;
-          height:2px;
-          display:block;
-          width:95%;
-          background-color:rgba(255,255,255,0.19);
-          border-radius:2px;
-          margin:0.5rem 0 1rem;
-          overflow:visible;
-          margin-bottom:10px;
-          .determinate {
-            background-color:#78909c;
-            position:absolute;
-            top:0;
-            bottom:0;
-            .fa, .material-icons {
-              font-size:13px;
-              position:absolute;
-              top:-4px;
-              right:-2px;
-              margin-left:50%;
-              color:white;
-            }
-          }
+      padding-top:8px;
+      padding-left: 10px;
+      div.left {
+        span{
+          display:inline-block;
+          background-color: rgb(225, 225, 225);
+          padding: 2px 2px 2px 2px;
+          margin: 2px 2px 2px 2px;
         }
       }
     }
@@ -436,6 +376,27 @@ h4 {
   .item.last .text {
     border-bottom-style:none;
     padding-bottom:0;
+  }
+  .rec-box {
+    margin-top:5px;
+    margin-left: 12px;
+    margin-right: 10px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    .recommendation {
+      font-style: italic;
+      line-height: 150%;
+    }
+    .recommender {
+      margin-top:10px;
+      font-style: bold;
+    }
+    .position {
+      margin-top:5px;
+      font-style: bold;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
   }
 }
 #myselfpic {
